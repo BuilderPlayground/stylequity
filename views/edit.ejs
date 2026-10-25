@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Edit Your Item | Stylequity™</title>
+
+  <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+
+  <header>
+    <h1>STYLEQUITY™</h1>
+    <p>Your Personal Style Portfolio</p>
+  </header>
+
+  <main class="styleequity-home">
+
+    <!-- EDIT ITEM SECTION -->
+
+    <section class="add-item-section edit-item-section">
+
+      <div class="section-heading">
+
+        <div>
+          <p class="eyebrow">THE PERSONAL ARCHIVE</p>
+
+          <h2>Edit Your Item</h2>
+
+          <p>
+            Your collection evolves with you.
+            Update your item's details below.
+          </p>
+        </div>
+
+        <a href="/" class="section-action">
+          ← Back to Your Collection
+        </a>
+
+      </div>
+
+      <!-- EDIT ITEM FORM -->
+
+      <form
+        action="/items/<%= item._id.toString() %>/edit"
+        method="POST"
+        class="collection-form">
+
+        <!-- ITEM NAME -->
+
+        <div class="form-field form-field-wide">
+
+          <label for="itemName">Item Name</label>
+
+          <input
+            type="text"
+            id="itemName"
+            name="itemName"
+            value="<%= item.itemName %>"
+            required>
+
+        </div>
+
+
+        <!-- CATEGORY -->
+
+        <div class="form-field">
+
+          <label for="category">Category</label>
+
+          <select id="category" name="category" required>
+
+            <option value="Apparel"
+              <%= item.category === 'Apparel' ? 'selected' : '' %>>
+              Apparel
+            </option>
+
+            <option value="Footwear"
+              <%= item.category === 'Footwear' ? 'selected' : '' %>>
+              Footwear
+            </option>
+
+            <option value="Accessories"
+              <%= item.category === 'Accessories' ? 'selected' : '' %>>
+              Accessories
+            </option>
+
+            <option value="Furniture"
+              <%= item.category === 'Furniture' ? 'selected' : '' %>>
+              Furniture
+            </option>
+
+            <option value="Home Decor"
+              <%= item.category === 'Home Decor' ? 'selected' : '' %>>
+              Home Decor
+            </option>
+
+            <option value="Beauty &amp; Devices"
+              <%= item.category === 'Beauty & Devices' ? 'selected' : '' %>>
+              Beauty &amp; Devices
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- BRAND -->
+
+        <div class="form-field">
+
+          <label for="brand">Brand — Optional</label>
+
+          <input
+            type="text"
+            id="brand"
+            name="brand"
+            maxlength="100"
+            value="<%= item.brand || '' %>"
+            placeholder="e.g., Hermès">
+
+        </div>
+
+
+        <!-- ITEM TYPE -->
+
+        <div class="form-field">
+
+          <label for="itemType">Item Type — Optional</label>
+
+          <input
+            type="text"
+            id="itemType"
+            name="itemType"
+            maxlength="80"
+            value="<%= item.itemType || '' %>"
+            placeholder="e.g., Shoulder Bag">
+
+        </div>
+
+
+        <!-- PURCHASE PRICE -->
+
+        <div class="form-field">
+
+          <label for="purchasePrice">Purchase Price ($)</label>
+
+          <input
+            type="number"
+            id="purchasePrice"
+            name="purchasePrice"
+            min="0"
+            step="0.01"
+            value="<%= item.purchasePrice %>"
+            required>
+
+        </div>
+
+
+        <!-- TIMES WORN OR USED -->
+
+        <div class="form-field">
+
+          <label for="timesUsed">Times Worn or Used</label>
+
+          <input
+            type="number"
+            id="timesUsed"
+            name="timesUsed"
+            min="0"
+            step="1"
+            value="<%= item.timesUsed %>"
+            required>
+
+        </div>
+
+
+        <!-- ESTIMATED RESALE VALUE -->
+
+        <div class="form-field">
+
+          <label for="estimatedResaleValue">
+            Estimated Resale Value ($) — Optional
+          </label>
+
+          <input
+            type="number"
+            id="estimatedResaleValue"
+            name="estimatedResaleValue"
+            min="0"
+            step="0.01"
+            value="<%= item.estimatedResaleValue == null ? '' : item.estimatedResaleValue %>">
+
+        </div>
+
+
+        <!-- IMAGE URL -->
+
+        <div class="form-field form-field-wide">
+
+          <label for="imageUrl">Image URL — Optional</label>
+
+          <input
+            type="url"
+            id="imageUrl"
+            name="imageUrl"
+            value="<%= item.imageUrl || '' %>"
+            placeholder="https://example.com/image.jpg">
+
+        </div>
+
+
+        <!-- SAVE CHANGES -->
+
+        <div class="form-submit">
+
+          <button type="submit">
+            Save Changes ↗
+          </button>
+
+          <span>
+            Thoughtful ownership starts with awareness.
+          </span>
+
+        </div>
+
+      </form>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>STYLEQUITY™ — A MORE INTENTIONAL WAY TO OWN.</p>
+  </footer>
+
+</body>
+</html>

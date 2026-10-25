@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Stylequity™ | Personal Ownership Intelligence</title>
+
+  <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body>
+
+  <header>
+    <h1>STYLEQUITY<sup class="trademark">™</sup></h1>
+    <p>Personal Ownership Intelligence</p>
+  </header>
+
+  <main class="styleequity-home">
+
+  <!-- EDITORIAL HERO -->
+  <section class="hero-section">
+
+    <div class="hero-copy">
+
+      <p class="eyebrow">STYLE, VALUE & INTENTION</p>
+
+      <h2>Own thoughtfully. Wear intentionally. Know your worth.</h2>
+
+      <p class="hero-description">
+      A personal style portfolio—and the first chapter. Because the value of a piece isn't settled at checkout.
+    </p>
+
+      <a href="#collection-section" class="hero-link">
+        Explore your collection <span aria-hidden="true">↗</span>
+      </a>
+
+    </div>
+
+    <aside class="hero-aside">
+
+      <span class="hero-aside-label">THE OWNERSHIP EDIT</span>
+
+      <div class="hero-aside-art" aria-hidden="true">
+        S.
+      </div>
+
+      <p>CURATE WITH INTENTION.<br>USE WITH PURPOSE.</p>
+
+    </aside>
+
+  </section>
+
+
+  <!-- PORTFOLIO OVERVIEW -->
+
+  <%
+    const totalPurchaseSpend = items.reduce(
+      (sum, item) => sum + Number(item.purchasePrice || 0),
+      0
+    );
+
+    const totalUses = items.reduce(
+      (sum, item) => sum + Number(item.timesUsed || 0),
+      0
+    );
+  %>
+
+  <section class="portfolio-overview">
+
+    <div class="overview-heading">
+      <p class="eyebrow">AT A GLANCE</p>
+      <h2>Your Ownership Portfolio</h2>
+    </div>
+
+    <div class="overview-grid">
+
+      <div class="overview-stat">
+        <span class="stat-label">PIECES IN YOUR COLLECTION</span>
+        <strong><%= items.length %></strong>
+        <span class="stat-caption">Your curated archive</span>
+      </div>
+
+      <div class="overview-stat">
+        <span class="stat-label">TOTAL WEARS & USES</span>
+        <strong><%= totalUses %></strong>
+        <span class="stat-caption">Every use tells a story</span>
+      </div>
+
+      <div class="overview-stat">
+        <span class="stat-label">RECORDED PURCHASE SPEND</span>
+        <strong>$<%= totalPurchaseSpend.toFixed(2) %></strong>
+        <span class="stat-caption">Your original investment</span>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- COLLECTION -->
+
+  <section id="collection-section" class="collection-section">
+
+    <div class="section-heading">
+
+      <div>
+        <p class="eyebrow">THE PERSONAL ARCHIVE</p>
+        <h2>Your Collection</h2>
+        <p>Your wardrobe, considered.</p>
+      </div>
+
+      <a href="#add-item" class="section-action">
+        + Add a Piece
+      </a>
+
+    </div>
+
+
+    <div id="collection">
+
+      <% if (items.length === 0) { %>
+
+        <div class="collection-empty">
+
+          <span class="empty-symbol" aria-hidden="true">S.</span>
+
+          <h3>Your collection is waiting to be curated.</h3>
+
+          <p>Begin with a piece you love. Every intentional collection starts somewhere.</p>
+
+          <a href="#add-item">Add Your First Piece ↗</a>
+
+        </div>
+
+      <% } else { %>
+
+        <% items.forEach((item) => { %>
+
+          <article class="portfolio-card">
+
+            <!-- ITEM IMAGE -->
+
+            <div class="portfolio-card-visual">
+
+              <% if (item.imageUrl) { %>
+
+                <img
+                  src="<%= item.imageUrl %>"
+                  alt="<%= item.itemName %>"
+                  loading="lazy"
+                >
+
+              <% } else { %>
+
+                <div class="portfolio-card-placeholder">
+
+                  <span class="placeholder-mark" aria-hidden="true">S.</span>
+
+                  <span class="placeholder-caption">
+                    THE OWNERSHIP EDIT
+                  </span>
+
+                </div>
+
+              <% } %>
+
+            </div>
+
+
+           <!-- ITEM DETAILS -->
+
+            <div class="portfolio-card-content">
+
+              <%
+                const brandName =
+                  typeof item.brand === 'string'
+                    ? item.brand.trim()
+                    : '';
+
+                const itemTypeName =
+                  typeof item.itemType === 'string'
+                    ? item.itemType.trim()
+                    : '';
+
+                const originalName = item.itemName.trim();
+
+                const brandAlreadyInName =
+                  brandName &&
+                  originalName.toLowerCase().startsWith(
+                    brandName.toLowerCase() + ' '
+                  );
+
+                const displayName = brandAlreadyInName
+                  ? originalName.slice(brandName.length).trim()
+                  : originalName;
+              %>
+
+              <p class="item-category">
+                <%= item.category %>
+              </p>
+
+              <% if (brandName) { %>
+
+                <p class="item-brand">
+                  <%= brandName %>
+                </p>
+
+              <% } %>
+
+              <h3><%= displayName %></h3>
+
+              <% if (itemTypeName) { %>
+
+                <p class="item-type">
+                  <%= itemTypeName %>
+                </p>
+
+              <% } %>
+
+
+              <div class="item-details">
+
+                <div>
+                  <span>Purchase Price</span>
+                  <strong>
+                    $<%= Number(item.purchasePrice).toFixed(2) %>
+                  </strong>
+                </div>
+
+                <div>
+                  <span>Times Worn / Used</span>
+                  <strong><%= item.timesUsed %></strong>
+                </div>
+
+                <% if (item.estimatedResaleValue != null) { %>
+
+                  <div>
+                    <span>Estimated Resale Value</span>
+                    <strong>
+                      $<%= Number(item.estimatedResaleValue).toFixed(2) %>
+                    </strong>
+                  </div>
+
+                <% } %>
+
+              </div>
+
+
+              <!-- FEATURED METRIC -->
+
+              <div class="cost-per-use">
+
+                <span>COST PER USE</span>
+
+                <% if (item.timesUsed > 0) { %>
+
+                  <strong>
+                    $<%= (item.purchasePrice / item.timesUsed).toFixed(2) %>
+                  </strong>
+
+                <% } else { %>
+
+                  <strong>—</strong>
+
+                <% } %>
+
+                <small>
+                  <% if (item.timesUsed > 0) { %>
+                    The value of every use.
+                  <% } else { %>
+                    Your first use awaits.
+                  <% } %>
+                </small>
+
+              </div>
+
+
+              <!-- ITEM ACTIONS -->
+
+              <div class="portfolio-card-actions">
+
+                <form
+                  action="/items/<%= item._id.toString() %>/use"
+                  method="POST"
+                  class="use-form">
+                  <button type="submit">
+                    + Log Another Use
+                  </button>
+                </form>
+
+                <a
+                  href="/items/<%= item._id.toString() %>/edit"
+                  class="edit-link">
+                  Edit Item
+                </a>
+
+                <form
+                  action="/items/<%= item._id.toString() %>/delete"
+                  method="POST"
+                  class="delete-form"
+                  onsubmit="return confirm('Are you sure you want to delete this item? This action cannot be undone.')">
+                  <button type="submit">Delete</button>
+                </form>
+
+              </div>
+
+            </div>
+
+          </article>
+
+        <% }) %>
+
+      <% } %>
+
+    </div>
+
+  </section>
+
+
+  <!-- ADD TO COLLECTION -->
+
+  <section id="add-item" class="add-item-section">
+
+    <div class="section-heading">
+
+      <div>
+        <p class="eyebrow">GROW YOUR ARCHIVE</p>
+        <h2>Add to Your Collection</h2>
+
+        <p>Every piece has a story. Start building a more intentional relationship with what you own.</p>
+      </div>
+
+    </div>
+
+
+    <form action="/items" method="POST" class="collection-form">
+
+      <div class="form-field form-field-wide">
+
+        <label for="itemName">Item Name</label>
+
+        <input
+          type="text"
+          id="itemName"
+          name="itemName"
+          placeholder="e.g., Vintage Leather Jacket"
+          required>
+
+      </div>
+
+
+      <div class="form-field">
+
+        <label for="category">Category</label>
+
+        <select id="category" name="category" required>
+
+          <option value="">Select a category</option>
+          <option value="Apparel">Apparel</option>
+          <option value="Footwear">Footwear</option>
+          <option value="Accessories">Accessories</option>
+          <option value="Furniture">Furniture</option>
+          <option value="Home Decor">Home Decor</option>
+          <option value="Beauty & Devices">Beauty & Devices</option>
+
+        </select>
+
+      </div>
+
+      <!-- Brand -->
+    <div class="form-field">
+
+      <label for="brand">Brand — Optional</label>
+
+      <input
+        type="text"
+        id="brand"
+        name="brand"
+        maxlength="100"
+        placeholder="e.g., TOTEME">
+
+    </div>
+
+
+    <!-- Item Type -->
+    <div class="form-field">
+
+      <label for="itemType">Item Type — Optional</label>
+
+      <input
+        type="text"
+        id="itemType"
+        name="itemType"
+        maxlength="80"
+        placeholder="e.g., Leather Coat">
+
+    </div>
+
+
+      <div class="form-field">
+
+        <label for="purchasePrice">Purchase Price ($)</label>
+
+        <input
+          type="number"
+          id="purchasePrice"
+          name="purchasePrice"
+          min="0"
+          step="0.01"
+          placeholder="e.g., 250.00"
+          required>
+
+      </div>
+
+
+      <div class="form-field">
+
+        <label for="timesUsed">Times Worn or Used</label>
+
+        <input
+          type="number"
+          id="timesUsed"
+          name="timesUsed"
+          min="0"
+          step="1"
+          value="0"
+          required>
+
+      </div>
+
+
+      <div class="form-field">
+
+        <label for="estimatedResaleValue">
+          Estimated Resale Value ($) — Optional
+        </label>
+
+        <input
+          type="number"
+          id="estimatedResaleValue"
+          name="estimatedResaleValue"
+          min="0"
+          step="0.01"
+          placeholder="e.g., 175.00">
+
+      </div>
+
+
+      <div class="form-field form-field-wide">
+
+        <label for="imageUrl">Image URL — Optional</label>
+
+        <input
+          type="url"
+          id="imageUrl"
+          name="imageUrl"
+          placeholder="https://example.com/image.jpg">
+
+      </div>
+
+
+      <div class="form-submit">
+
+        <button type="submit">
+          Add to Collection ↗
+        </button>
+
+        <span>
+          Thoughtful ownership starts with awareness.
+        </span>
+
+      </div>
+
+    </form>
+
+  </section>
+
+  <!-- BEYOND THE ARCHIVE: THE FUTURE OF STYLEQUITY -->
+
+<section class="beyond-archive" aria-labelledby="beyond-archive-title">
+
+  <div class="beyond-archive-intro">
+
+    <p class="eyebrow">THE NEXT CHAPTER</p>
+
+    <h2 id="beyond-archive-title">Beyond the Archive</h2>
+
+    <p class="beyond-archive-description">
+      What you own is only part of the story. Stylequity's vision extends beyond organizing your collection to helping you make more informed decisions about what you acquire, how you use it, what you keep, and how you realize value.
+    </p>
+
+    <p class="beyond-archive-vision">
+      THE FUTURE OF PERSONAL OWNERSHIP INTELLIGENCE
+    </p>
+
+  </div>
+
+
+  <div class="beyond-archive-grid">
+
+    <!-- STYLE & SPACE -->
+
+    <article class="beyond-archive-card">
+
+      <span class="coming-soon">COMING SOON</span>
+
+      <span class="beyond-archive-number">01 /</span>
+
+      <h3>Your Style & Space</h3>
+
+      <p>
+        Go beyond inventory management with tools for wardrobe curation, personal styling, and more intentional living spaces.
+      </p>
+
+    </article>
+
+
+    <!-- PURCHASE INTELLIGENCE -->
+
+    <article class="beyond-archive-card">
+
+      <span class="coming-soon">COMING SOON</span>
+
+      <span class="beyond-archive-number">02 /</span>
+
+      <h3>Purchase Intelligence</h3>
+
+      <p>
+        Make more informed purchasing decisions by considering expected use, cost per use, long-term value, and the trade-offs behind every acquisition.
+      </p>
+
+    </article>
+
+
+    <!-- RESALE & CIRCULARITY -->
+
+    <article class="beyond-archive-card">
+
+      <span class="coming-soon">COMING SOON</span>
+
+      <span class="beyond-archive-number">03 /</span>
+
+      <h3>Resale & Circularity</h3>
+
+      <p>
+        Explore opportunities to extend the life of your possessions, understand their potential resale value, and make more intentional decisions about what comes next.
+      </p>
+
+    </article>
+
+
+    <!-- OWNERSHIP COMMUNITY -->
+
+    <article class="beyond-archive-card">
+
+      <span class="coming-soon">COMING SOON</span>
+
+      <span class="beyond-archive-number">04 /</span>
+
+      <h3>The Ownership Community</h3>
+
+      <p>
+        Discover inspiration, exchange insights, and connect with a community exploring a more thoughtful relationship with what we own.
+      </p>
+
+    </article>
+
+  </div>
+
+</section>
+
+</main>
+
+  <footer>
+    <p>STYLEQUITY™ — A MORE INTENTIONAL WAY TO OWN.</p>
+  </footer>
+
+</body>
+</html>
