@@ -5,7 +5,7 @@ const {MongoClient, ObjectId} = require('mongodb')
 const app = express()
 // const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 3000
-const dbName = 'stylequity'
+const dbName = process.env.DB_NAME || 'stylequity'
 const url = process.env.MONGODB_URI
 
 let db
